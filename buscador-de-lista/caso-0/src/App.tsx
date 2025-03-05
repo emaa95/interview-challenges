@@ -18,7 +18,7 @@ function App() {
       <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target.value)} />
       <ul>
         {products.map((product) => (
-          <li key={product.id}>
+          <li key={product.id} className={product.price <= 100 ? 'sale' : ''}>
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <span>$ {product.price}</span>
