@@ -1,7 +1,7 @@
 # Ejercicios de entrevista
 
 ## Nivel 1
-- [ ] No se muestran los productos al cargar la aplicación.
+- [x] No se muestran los productos al cargar la aplicación.
 
 ## Nivel 2
 - [ ] Cuando buscamos no se muestran productos.

@@ -9,7 +9,7 @@ function App() {
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
-    api.search(query);
+    api.search(query).then(setProducts);
   }, [query]);
 
   return (
