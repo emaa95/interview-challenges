@@ -15,7 +15,7 @@ function App() {
   return (
     <main>
       <h1>Tienda digitaloncy</h1>
-      <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target)} />
+      <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target.value)} />
       <ul>
         {products.map((product) => (
           <li key={product.id}>
