@@ -21,7 +21,7 @@ function App() {
           <li key={product.id}>
             <h4>{product.title}</h4>
             <p>{product.description}</p>
-            <span>$ {product.price}</span>
+            <span>{new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(product.price)}</span>
           </li>
         ))}
       </ul>

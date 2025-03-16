@@ -4,7 +4,7 @@
 - [x] El search debe ser case insensitive.
 
 ## Nivel 2
-- [ ] El precio no se muestra localizado para Argentina.
+- [x] El precio no se muestra localizado para Argentina.
 
 ## Nivel 3
 - [ ] Agregar un select para ordenar los resultados alfabéticamente o por precio.
