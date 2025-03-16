@@ -1,7 +1,7 @@
 # Ejercicios de entrevista
 
 ## Nivel 1
-- [ ] El search debe ser case insensitive.
+- [x] El search debe ser case insensitive.
 
 ## Nivel 2
 - [ ] El precio no se muestra localizado para Argentina.
