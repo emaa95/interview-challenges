@@ -1,24 +1,26 @@
 import type {Product} from "./types";
 
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 
 import api from "./api";
 
 function Recommended() {
   const [products, setProducts] = useState<Product[]>([]);
-
+  
   useEffect(() => {
     api.search().then(setProducts);
   }, []);
+  
+  const randomProducts = useMemo(() => [...products]
+  .sort(() => (Math.random() > 0.5 ? 1 : -1))
+  .slice(0, 2), [products]);
 
   return (
     <main>
       <h1>Productos recomendados</h1>
       <ul>
-        {[...products]
-          .sort(() => (Math.random() > 0.5 ? 1 : -1))
-          .slice(0, 2)
-          .map((product) => (
+        {
+          randomProducts.map((product) => (
             <li key={product.id}>
               <h4>{product.title}</h4>
               <p>{product.description}</p>
