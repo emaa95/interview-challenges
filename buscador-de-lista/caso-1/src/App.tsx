@@ -6,13 +6,22 @@ import api from "./api";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [query, setQuery] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
+  const [query, setQuery] = useState<string>(localStorage.getItem("query") || "");
+  const [sortOrder, setSortOrder] = useState<string>(localStorage.getItem("sortOrder") || "");
 
 
   useEffect(() => {
     api.search(query).then(setProducts);
   }, [query]);
+
+  useEffect(() => {
+    if (query) {
+      localStorage.setItem("query", query);
+    }
+    if (sortOrder) {
+      localStorage.setItem("sortOrder", sortOrder);
+    }
+  }, [query, sortOrder])
 
   const sortProducts = (products: Product[], sortOrder: string) => {
     switch (sortOrder){
@@ -36,7 +45,7 @@ function App() {
   return (
     <main>
       <h1>Tienda digitaloncy</h1>
-      <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target.value)} />
+      <input name="text" placeholder="tv" type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
       <select onChange={(e) => setSortOrder(e.target.value)} value={sortOrder}>
         <option value="">Ordenar por</option>
         <option value="alphabetical">Orden Alfabético</option>
