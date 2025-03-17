@@ -7,17 +7,44 @@ import api from "./api";
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
+
 
   useEffect(() => {
     api.search(query).then(setProducts);
   }, [query]);
 
+  const sortProducts = (products: Product[], sortOrder: string) => {
+    switch (sortOrder){
+      case "alphabetical":
+        return [...products].sort((a,b) => a.title.localeCompare(b.title));
+
+      case "price-asc":
+        return [...products].sort((a,b) => a.price - b.price );
+    
+      case "price-desc":
+        return [...products].sort((a,b) => b.price - a.price);
+      
+      default: 
+        return products;
+      
+    }    
+  };
+
+  const sortedProducts = sortProducts(products, sortOrder);
+
   return (
     <main>
       <h1>Tienda digitaloncy</h1>
       <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target.value)} />
+      <select onChange={(e) => setSortOrder(e.target.value)} value={sortOrder}>
+        <option value="">Ordenar por</option>
+        <option value="alphabetical">Orden Alfabético</option>
+        <option value="price-asc">Precio: Menor a Mayor</option>
+        <option value="price-desc">Precio: Mayor a Menor</option>
+      </select>
       <ul>
-        {products.map((product) => (
+        {sortedProducts.map((product) => (
           <li key={product.id}>
             <h4>{product.title}</h4>
             <p>{product.description}</p>
