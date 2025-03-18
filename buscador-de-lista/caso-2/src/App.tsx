@@ -35,9 +35,22 @@ function Recommended() {
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
+  const [debounceTimeout, setDebounceTimeout] = useState<number | null>(null);
 
   useEffect(() => {
-    api.search(query).then(setProducts);
+
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+
+    const timeout = setTimeout(() => {
+      api.search(query).then(setProducts);
+    }, 300);
+
+    setDebounceTimeout(timeout);
+
+    return () => clearTimeout(timeout);
+    
   }, [query]);
 
   return (
