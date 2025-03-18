@@ -10,4 +10,4 @@
 - [x] Debemos poder agregar y quitar productos de favoritos al clickearlos. Los productos en favoritos deben tener la clase "fav".
 
 ## Extra
-- [ ] Los favoritos deben persistirse cuando recargamos la página.
+- [x] Los favoritos deben persistirse cuando recargamos la página.

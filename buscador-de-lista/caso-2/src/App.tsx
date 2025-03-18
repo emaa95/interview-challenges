@@ -4,6 +4,17 @@ import {useEffect, useMemo, useState} from "react";
 
 import api from "./api";
 
+// Función para obtener los favoritos del localStorage
+const getFavoritesFromLocalStorage = (): Set<number> => {
+  const storedFavorites = localStorage.getItem("favorites");
+  return storedFavorites ? new Set(JSON.parse(storedFavorites)) : new Set();
+};
+
+// Función para guardar los favoritos en el localStorage
+const saveFavoritesToLocalStorage = (favorites: Set<number>) => {
+  localStorage.setItem("favorites", JSON.stringify([...favorites]));
+};
+
 function Recommended() {
   const [products, setProducts] = useState<Product[]>([]);
   
@@ -36,7 +47,7 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
   const [debounceTimeout, setDebounceTimeout] = useState<number | null>(null);
-  const [favorites, setFavorites] = useState<Set<number>>(new Set());
+  const [favorites, setFavorites] = useState<Set<number>>(getFavoritesFromLocalStorage());
 
   useEffect(() => {
 
@@ -54,6 +65,8 @@ function App() {
     
   }, [query]);
 
+  
+
   const toggleFavourite = (productId: number) => {
     setFavorites((prevFavourites) => {
       const newFavourites = new Set (prevFavourites);
@@ -63,6 +76,9 @@ function App() {
       } else {
         newFavourites.add(productId);
       }
+
+      saveFavoritesToLocalStorage(newFavourites);
+      
       return newFavourites;
     })
   }
