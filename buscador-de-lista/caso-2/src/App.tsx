@@ -36,6 +36,7 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
   const [debounceTimeout, setDebounceTimeout] = useState<number | null>(null);
+  const [favorites, setFavorites] = useState<Set<number>>(new Set());
 
   useEffect(() => {
 
@@ -53,13 +54,28 @@ function App() {
     
   }, [query]);
 
+  const toggleFavourite = (productId: number) => {
+    setFavorites((prevFavourites) => {
+      const newFavourites = new Set (prevFavourites);
+
+      if (newFavourites.has(productId)){
+        newFavourites.delete(productId);
+      } else {
+        newFavourites.add(productId);
+      }
+      return newFavourites;
+    })
+  }
+
   return (
     <main>
       <h1>Tienda digitaloncy</h1>
       <input name="text" placeholder="tv" type="text" onChange={(e) => setQuery(e.target.value)} />
       <ul>
         {products.map((product) => (
-          <li key={product.id}>
+          <li key={product.id} className={favorites.has(product.id) ? "fav" : " "}
+            onClick={() => toggleFavourite(product.id)}
+          >
             <h4>{product.title}</h4>
             <p>{product.description}</p>
             <span>$ {product.price}</span>
