@@ -1,7 +1,7 @@
 # Ejercicios de entrevista
 
 ## Nivel 1
-- [ ] La aplicación crashea al iniciar
+- [x] La aplicación crashea al iniciar
 
 ## Nivel 2
 - [ ] Hay un warning en la consola
