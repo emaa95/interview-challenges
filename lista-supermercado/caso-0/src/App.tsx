@@ -12,6 +12,10 @@ function App() {
     api.list().then(setItems);
   }, []);
 
+  const removeTask = (id: number) => {
+    setItems((item) => item.filter((item) =>  item.id != id));
+  }
+
   return (
     <main className={styles.main}>
       <h1>Supermarket list</h1>
@@ -22,7 +26,7 @@ function App() {
       <ul>
         {items.map((item) => (
           <li key={item.id} className={item.completed ? styles.completed : ""}>
-            {item.text} <button>[X]</button>
+            {item.text} <button onClick={() => removeTask(item.id)}>[X]</button>
           </li>
         ))}
       </ul>
