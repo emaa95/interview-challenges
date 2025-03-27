@@ -10,4 +10,4 @@
 - [x] Nuestra función de eliminar no está implementada
 
 ## Extra
-- [ ] Quiero que el foco inicie en nuestro input
+- [x] Quiero que el foco inicie en nuestro input

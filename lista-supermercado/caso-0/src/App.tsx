@@ -20,7 +20,7 @@ function App() {
     <main className={styles.main}>
       <h1>Supermarket list</h1>
       <form>
-        <input name="text" type="text" />
+        <input autoFocus name="text" type="text" />
         <button>Add</button>
       </form>
       <ul>
