@@ -4,7 +4,7 @@
 - [x] Nuestra aplicación se recarga al agregar un elemento
 
 ## Nivel 3
-- [ ] Nuestra función de add no está implementada
+- [x] Nuestra función de add no está implementada
 
 ## Nivel 2
 - [ ] Nuestro input no se limpia al agregar elementos nuevos

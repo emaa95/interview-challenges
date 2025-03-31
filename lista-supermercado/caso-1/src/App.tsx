@@ -11,6 +11,7 @@ interface Form extends HTMLFormElement {
 
 function App() {
   const [items, setItems] = useState<Item[]>([]);
+  const [textInput, setTextInput] = useState("");
 
   function handleToggle(id: Item["id"]) {
     setItems((items) =>
@@ -18,9 +19,12 @@ function App() {
     );
   }
 
+  const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
+
   function handleAdd(event: React.ChangeEvent<Form>) {
     // Should implement
     event.preventDefault();
+    setItems([...items, {id: generateId(), text: textInput, completed: false}])
   }
 
   function handleRemove(id: Item["id"]) {
@@ -35,8 +39,8 @@ function App() {
     <main className={styles.main}>
       <h1>Supermarket list</h1>
       <form onSubmit={handleAdd}>
-        <input name="text" type="text" />
-        <button>Add</button>
+        <input name="text" type="text" onChange={(e) => setTextInput(e.target.value)} />
+        <button type="submit">Add</button>
       </form>
       <ul>
         {items?.map((item) => (
