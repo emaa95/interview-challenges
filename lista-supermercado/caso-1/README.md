@@ -1,7 +1,7 @@
 # Ejercicios de entrevista
 
 ## Nivel 1
-- [ ] Nuestra aplicación se recarga al agregar un elemento
+- [x] Nuestra aplicación se recarga al agregar un elemento
 
 ## Nivel 3
 - [ ] Nuestra función de add no está implementada
