@@ -12,6 +12,7 @@ interface Form extends HTMLFormElement {
 function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [textInput, setTextInput] = useState("");
+  const [loading, setLoading] = useState(true); 
 
   function handleToggle(id: Item["id"]) {
     setItems((items) =>
@@ -33,27 +34,38 @@ function App() {
   }
 
   useEffect(() => {
-    api.list().then(setItems);
+    api.list().then((data) => {
+      setItems(data);
+      setLoading(false);
+    });
+
   }, []);
 
   return (
     <main className={styles.main}>
       <h1>Supermarket list</h1>
-      <form onSubmit={handleAdd}>
-        <input name="text" type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} />
-        <button type="submit">Add</button>
-      </form>
-      <ul>
-        {items?.map((item) => (
-          <li
-            key={item.id}
-            className={item.completed ? styles.completed : ""}
-            onClick={() => handleToggle(item.id)}
-          >
-            {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <p>Loading...</p> 
+      ) : (
+        <>
+          <form onSubmit={handleAdd}>
+            <input name="text" type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} />
+            <button type="submit">Add</button>
+          </form>
+          <ul>
+          {items?.map((item) => (
+            <li
+              key={item.id}
+              className={item.completed ? styles.completed : ""}
+              onClick={() => handleToggle(item.id)}
+            >
+              {item.text} <button onClick={() => handleRemove(item.id)}>[X]</button>
+            </li>
+            ))}
+          </ul>
+        </>
+      )
+      }
     </main>
   );
 }

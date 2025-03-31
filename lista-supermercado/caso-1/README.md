@@ -10,4 +10,4 @@
 - [x] Nuestro input no se limpia al agregar elementos nuevos
 
 ## Extra
-- [ ] Nuestra aplicación muestra el formulario vacío por unos segundos hasta que termina de cargar
+- [x] Nuestra aplicación muestra el formulario vacío por unos segundos hasta que termina de cargar
