@@ -25,6 +25,7 @@ function App() {
     // Should implement
     event.preventDefault();
     setItems([...items, {id: generateId(), text: textInput, completed: false}])
+    setTextInput("");
   }
 
   function handleRemove(id: Item["id"]) {
@@ -39,7 +40,7 @@ function App() {
     <main className={styles.main}>
       <h1>Supermarket list</h1>
       <form onSubmit={handleAdd}>
-        <input name="text" type="text" onChange={(e) => setTextInput(e.target.value)} />
+        <input name="text" type="text" value={textInput} onChange={(e) => setTextInput(e.target.value)} />
         <button type="submit">Add</button>
       </form>
       <ul>

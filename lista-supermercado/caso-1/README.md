@@ -7,7 +7,7 @@
 - [x] Nuestra función de add no está implementada
 
 ## Nivel 2
-- [ ] Nuestro input no se limpia al agregar elementos nuevos
+- [x] Nuestro input no se limpia al agregar elementos nuevos
 
 ## Extra
 - [ ] Nuestra aplicación muestra el formulario vacío por unos segundos hasta que termina de cargar
