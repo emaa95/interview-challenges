@@ -2,7 +2,45 @@ import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext()
 
+/**
+ * Inicializa las claves necesarias en localStorage para la sesión del usuario.
+ *
+ * - Si no existe la clave `account`, la crea como un objeto vacío `{}`.
+ * - Si no existe la clave `sign-out`, la crea con el valor `false`.
+ *
+ * Esta función asegura que ambas claves existan para evitar errores al acceder a localStorage más adelante.
+ *
+ * @returns {void}
+ */
+
+export const initializeLocalStorage = () => {
+  const accountInLocalStorage = localStorage.getItem('account');
+  const signOutInLocalStorage = localStorage.getItem('sign-out');
+
+  let parsedAccount;
+  let parsedSignOut;
+
+  if (!accountInLocalStorage) {
+    localStorage.setItem('account', JSON.stringify({}))
+    parsedAccount = {};
+  } else {
+    parsedAccount = JSON.parse(accountInLocalStorage);
+  }
+
+  if (!signOutInLocalStorage) {
+    localStorage.setItem('sign-out',JSON.stringify(false))
+    parsedSignOut = false;
+  } else {
+    parsedSignOut = JSON.parse(signOutInLocalStorage);
+  }
+}
+
 export const ShoppingCartProvider = ({children}) => {
+
+  const [account, setAccount] = useState({})
+
+  const [signOut, setSignOut] = useState(false);
+
   // Shopping Cart · Increment quantity
   const [count, setCount] = useState(0)
 
@@ -105,7 +143,11 @@ export const ShoppingCartProvider = ({children}) => {
       filteredItems,
       searchByCategory,
       setSearchByCategory,
-      currentDate
+      currentDate,
+      account,
+      setAccount,
+      signOut,
+      setSignOut
     }}>
       {children}
     </ShoppingCartContext.Provider>
