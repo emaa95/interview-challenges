@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import Layout from '../../Components/Layout'
 import { useContext, useRef, useState } from 'react'
 import { ShoppingCartContext } from '../../Context'
@@ -29,6 +29,29 @@ function SignIn() {
   const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
   const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
+/**
+ * Maneja el proceso de inicio de sesión del usuario.
+ *
+ * - Actualiza el estado de sesión en `localStorage` y en el contexto global de la app.
+ * - Establece que el usuario está autenticado (`sign-out: false`).
+ * - Redirige automáticamente a la página principal (`/`) utilizando `react-router-dom`.
+ *
+ * ⚠️ Nota: Si se usa esta función desde un evento (como un botón),
+ * se recomienda manejar la redirección mediante un estado (`useState`)
+ * y renderizar el componente `<Navigate />` condicionalmente.
+ *
+ * @function handleSignIn
+ * @returns {JSX.Element} Redirección a `/` si se llama desde un render.
+ */
+
+  const handleSignIn = () => {
+   const stringifiedSignOut = JSON.stringify(false);
+    localStorage.setItem('sign-out', stringifiedSignOut)
+    context.setSignOut(false)
+
+    return <Navigate replace to={'/'}/>
+  }
+
   const createAnAccount = () => {
     const formData = new FormData(form.current)
     const data = {
@@ -37,7 +60,11 @@ function SignIn() {
       password: formData.get('password')
     }
 
-    console.log(data)
+    const stringifiedAccount = JSON.stringify(data)
+    localStorage.setItem('account', stringifiedAccount)
+    context.setAccount(data)
+
+    handleSignIn()
   }
 
   const renderLogin = () => {
@@ -54,7 +81,8 @@ function SignIn() {
           <Link
             to={"/"}
           >
-            <button className='bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2' disabled={!hasUserAnAccount}>
+            <button className='bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2' disabled={!hasUserAnAccount}
+             onClick={() => handleSignIn()}>
               Log in            
             </button>
           </Link>
