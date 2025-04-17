@@ -7,6 +7,11 @@ const Navbar = () => {
   const context = useContext(ShoppingCartContext)
   const activeStyle = 'underline underline-offset-4'
 
+  // Account 
+
+  const account = localStorage.getItem('account');
+  const parsedAccount = JSON.parse(account);
+
   // Sign out 
 
   //Recupera el valor de la clave 'sign-out' guardada en el navegador.
@@ -18,6 +23,11 @@ const Navbar = () => {
   //Determina si el usuario está desconectado.
   const isUserSignOut = context.signOut || parsedSignOut;
 
+
+  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
+  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+  
   /**
  * Cierra la sesión del usuario.
  *
@@ -41,21 +51,10 @@ const Navbar = () => {
   }
 
   const renderView = () => {
-    if (isUserSignOut) {
+    if (hasUserAnAccount && !isUserSignOut) {
       return (
-        <li>
-          <NavLink
-            to="/sign-in"
-            className={({ isActive }) => isActive ? activeStyle : undefined }
-            onClick={() => handleSignOut()}>
-            Sign out
-          </NavLink>
-        </li>
-      )
-    } else {
-      return (
-        <>
-          <li className='text-black/60'>
+      <>
+        <li className='text-black/60'>
             teff@platzi.com
           </li>
           <li>
@@ -80,7 +79,18 @@ const Navbar = () => {
               Sign out
             </NavLink>
           </li>
-        </>
+      </>
+      )
+    } else {
+      return (
+        <li>
+          <NavLink
+            to="/sign-in"
+            className={({ isActive }) => isActive ? activeStyle : undefined }
+            onClick={() => handleSignOut()}>
+            Sign out
+          </NavLink>
+        </li>
       )
     }
   }
@@ -90,8 +100,7 @@ const Navbar = () => {
       <ul className='flex items-center gap-3'>
         <li className='font-semibold text-lg'>
           <NavLink 
-            to='/'
-            onClick={() => context.setSearchByCategory()}
+            to={`${isUserSignOut ? '/sign-in' : '/'}`}
           >
             SHOPI
           </NavLink>
