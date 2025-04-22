@@ -3,15 +3,13 @@ import { NavLink } from 'react-router-dom'
 import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../Context'
 import ShoppingCart from '../ShoppingCart'
+import { useAccount } from '../../hooks'
 
 const Navbar = () => {
   const context = useContext(ShoppingCartContext)
   const activeStyle = 'underline underline-offset-4'
 
-  // Account 
-
-  const account = localStorage.getItem('account');
-  const parsedAccount = JSON.parse(account);
+  const {account, hasUserAnAccount} = useAccount();
 
   // Sign out 
 
@@ -23,11 +21,6 @@ const Navbar = () => {
 
   //Determina si el usuario está desconectado.
   const isUserSignOut = context.signOut || parsedSignOut;
-
-
-  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
-  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
-  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
   
   /**
  * Cierra la sesión del usuario.
@@ -56,7 +49,7 @@ const Navbar = () => {
       return (
       <>
         <li className='text-black/60'>
-            teff@platzi.com
+            {account?.email}
           </li>
           <li>
             <NavLink

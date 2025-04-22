@@ -2,32 +2,15 @@ import { Link, Navigate } from 'react-router-dom'
 import Layout from '../../Components/Layout'
 import { useContext, useRef, useState } from 'react'
 import { ShoppingCartContext } from '../../Context'
+import { useAccount } from '../../hooks'
 
 function SignIn() {
   const context = useContext(ShoppingCartContext)
   const [view, setView] = useState('user-info');
   const form = useRef(null);
 
-  const account = localStorage.getItem('account');
-  const parsedAccount = JSON.parse(account);
+  const {account, hasUserAnAccount} = useAccount();
 
-  /**
- * Determina si el usuario ya tiene una cuenta registrada,
- * validando tanto el almacenamiento local (`localStorage`) como
- * el estado global (contexto de la app).
- *
- * - `parsedAccount` representa la cuenta del usuario almacenada en localStorage (parseada con JSON.parse).
- * - `context.account` representa la cuenta cargada en el contexto global de React.
- *
- * La función considera que el usuario tiene cuenta si al menos uno
- * de los dos (localStorage o contexto) contiene información.
- *
- * @returns {boolean} `true` si el usuario tiene una cuenta registrada, `false` si no.
- */
-
-  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
-  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
-  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
 /**
  * Maneja el proceso de inicio de sesión del usuario.
@@ -72,11 +55,11 @@ function SignIn() {
         <div className='flex flex-col w-80'>
           <p>
             <span className='font-light text-sm'>Email: </span>
-            <span>{parsedAccount?.email}</span>
+            <span>{account?.email}</span>
           </p>
           <p>
             <span className='font-light text-sm'>Password: </span>
-            <span>{parsedAccount?.password}</span>
+            <span>{account?.password}</span>
           </p>
           <Link
             to={"/"}
@@ -107,7 +90,7 @@ function SignIn() {
           type="text" 
           id='name'
           name='name'
-          defaultValue={parsedAccount?.name}
+          defaultValue={account?.name}
           placeholder='Peter'
           className='rounded-lg border border-black placeholder:font-ligfht
           placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'   
@@ -119,7 +102,7 @@ function SignIn() {
           type="text" 
           id='email'
           name='email'
-          defaultValue={parsedAccount?.email}
+          defaultValue={account?.email}
           placeholder='hi@helloworld.com'
           className='rounded-lg border border-black placeholder:font-ligfht
           placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'   
@@ -132,7 +115,7 @@ function SignIn() {
           type="text" 
           id='password'
           name='password'
-          defaultValue={parsedAccount?.password}
+          defaultValue={account?.password}
           placeholder='*******'
           className='rounded-lg border border-black placeholder:font-ligfht
           placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'   

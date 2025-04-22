@@ -10,19 +10,15 @@ import Navbar from '../../Components/Navbar'
 import CheckoutSideMenu from '../../Components/CheckoutSideMenu'
 import './App.css'
 import { useContext } from 'react'
+import { useAccount } from '../../hooks'
 
 const AppRoutes = () => {
   const context = useContext(ShoppingCartContext)
 
-  const account = localStorage.getItem('account')
-  const parsedAccount = JSON.parse(account);
+  const {account, hasUserAnAccount} = useAccount();
 
   const signOut = localStorage.getItem('sign-out')
   const parsedSignOut = JSON.parse(signOut);
-
-  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
-  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
-  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
   const isUserSignOut = context.signOut || parsedSignOut;
 
   let routes = useRoutes([
