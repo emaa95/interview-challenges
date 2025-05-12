@@ -97,6 +97,10 @@ function App() {
 
         </Divider>
         <Flex>
+          { items.length == 0 ? 
+            <p>
+              <strong>La lista esta vacia</strong>
+            </p> :
           <List header={<div>Lista de items</div>} bordered dataSource={items}
             renderItem={(item) => (
               <List.Item key={item.id}>
@@ -105,6 +109,7 @@ function App() {
               </List.Item>
             )}>
           </List>
+          }
         </Flex>
       </Flex>
     </main>
