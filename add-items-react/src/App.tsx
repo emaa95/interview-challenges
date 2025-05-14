@@ -71,6 +71,7 @@ function App() {
           <Form 
             form={form}
             name='basic' 
+            aria-label='Añadir elementos a la lista'
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 600 }}
@@ -84,7 +85,7 @@ function App() {
                 name="text"
                 rules={[{ required:true, message:'Por favor ingrese una cadena de texto!'}]}
               >
-                <Input/>
+                <Input placeholder='Escribe algo...'/>
               </Form.Item>
               <Form.Item label={null}>
                 <Button type="primary" htmlType="submit">
