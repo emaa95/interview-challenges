@@ -6,7 +6,7 @@ export function ListOfMovies ({movies}) {
                   <li className="movie" key={movie.id}>
                     <h3>{movie.title}</h3>
                     <p>{movie.year}</p>
-                    <img src={movie.poster} alt={movie.Title}/>
+                    <img src={movie.poster} alt={movie.title}/>
                   </li>
                 ))
               }
