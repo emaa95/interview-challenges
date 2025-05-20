@@ -1,28 +1,23 @@
-import withResults from '../mocks/with-results.json'
-import withoutResults from '../mocks/no-results.json'
 import { useState } from 'react'
-import axios from 'Axios'
-export function useMovies ({search}) {
-  const [responseMovies, setResponseMovies] = useState([]) 
-  const movies = responseMovies.description || []
-  
-  const mappedMovies = movies?.map(movie => ({
-    id: movie["#IMDB_ID"],
-    title: movie["#TITLE"],
-    year: movie["#YEAR"],
-    poster: movie["#IMG_POSTER"]
-  })) 
+import { searchMovies } from '../services/movies'
 
-  const getMovies = () => {
-    if (search) {
-        axios.get(`https://imdb.iamidiotareyoutoo.com/search?q=${search}`)
-        .then(res => setResponseMovies(res.data))
-        .catch(error => {
-        console.error('Error al obtener las películas:', error);
-      });
-    } else {
-        setResponseMovies(withoutResults)
+export function useMovies ({search}) {
+  const [movies, setMovies] = useState([]) 
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const getMovies = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const newMovies = await searchMovies({search})
+      setMovies(newMovies)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
     }
+    
   }
-  return { movies: mappedMovies, getMovies }
+  return { movies, loading, error, getMovies }
 }
